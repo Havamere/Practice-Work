@@ -1,0 +1,185 @@
+var each = function(collection, iterator) {
+  if(Array.isArray(collection)) {
+    for(var i=0; i<collection.length;i++) {
+     iterator(collection[i], i, collection);
+    }
+  } else {
+    for(var key in collection) {
+      iterator(collection[key], key, collection);
+    }
+  }
+};
+
+function map (array, func){
+  var x = [];
+  each(array, function(element)
+   {
+     x.push(func(array))
+  });
+  return x;
+};
+  
+  
+  // Example:
+  //   var obj1 = {key1: "something"};
+  //   _.extend(obj1, {
+  //     key2: "something new",
+  //     key3: "something else new"
+  //   }, {
+  //     bla: "even more stuff"
+  //   }); // obj1 now contains key1, key2, key3 and bla
+  
+  //What is obj?
+[obj1, {}, {}]
+
+
+var extend = function(collection) {
+  each(arguments, function(argument){
+    each(argument, function(value, key){
+      collection[key] = value;
+    });    
+  });
+  return collection;
+};
+  
+extend(obj1, obj2, obj3) 
+// key1: "something", key2: "something new",... 
+
+
+ 
+// Default is like extend, but doesn't ever overwrite a key that already
+// exists in obj
+ 
+//  var iceCream = {flavor: "chocolate"};
+//_.defaults(iceCream, {flavor: "vanilla", sprinkles: "lots"});
+//=> {flavor: "chocolate", sprinkles: "lots"}
+
+var fruit1 = {type:"pineapple", tastes: "sweet", type:"kiwi"};
+var fruit2 = {type:"apple", smells: "fresh"};
+var fruit5 = {type: "orange", looks: "delicious"};
+
+var defaults = function(collection) {
+  each(arguments, function(argument){          
+    each(argument, function(value, key){          
+      if (collection[key] === undefined){       
+         return collection[key] = value;
+      }     
+    });    
+  });
+  return collection;
+};
+
+defaults(fruit1,fruit2,fruit5);
+//{ type: 'kiwi', tastes: 'sweet', smells: 'fresh', looks: 'delicious' }
+
+
+
+write a reduce function for objects and arrays.  
+
+
+function reduce (data, iterator, startPoint){
+    if (startPoint === undefined){
+        if (Array.isArray(data)) {
+            startPoint = data.shift();
+        } else {
+            if(data[Object.keys(data)[0]] === String){
+                startPoint = "";
+            } else{
+                startPoint = 0;
+            }
+        }
+    }
+    each(data, function(element){
+            startPoint = iterator(startPoint,element);
+        });
+        return startPoint;
+}
+
+function reduce (data, iterator, startPoint){
+  dataKeys = Object.keys(data);
+  if (startPoint === undefined){
+    startPoint = data[dataKeys.shift()];
+  }
+  each(dataKeys, function(element){
+    startPoint = iterator(startPoint,data[element]);
+    });
+  return startPoint;
+}
+
+function reduce (data, iterator, startPoint){
+  dataKeys = Object.keys(data);
+  startPoint = startPoint === undefined? data[dataKeys.shift()] : startPoint;
+  each(dataKeys, function(element){
+    startPoint = iterator(startPoint,data[element]);
+    });
+  return startPoint;
+}
+
+reduce([1,2,3,4,5],add,0);
+
+// Determine whether all of the elements match a truth test. To write every, we use reduce.
+// reduce the collection to a single value of true or false
+
+var every = function(collection, iterator){
+  reduce(collection, function(startPoint, value) {
+    if (iterator(startPoint) === true){
+      value = true;
+    } else {
+      value = false;
+      break;
+    }
+  startPoint = value;
+  return startValue;
+  }, true )
+};
+
+var every = function(collection, iterator){
+  var answer = true;
+  reduce(collection, function(startPoint, value) {
+    startPoint = iterator(value) === true? true : false;
+    if (startPoint === false){
+        answer = startPoint;
+    }
+    return startPoint;
+  }, true);
+  return answer;
+};
+
+var every = function(collection, iterator){
+  return reduce(collection, function(startPoint,value) {
+    if (startPoint === true){
+      return !!iterator(value);  //false or true   type-casting from a int to a boolean
+    }
+    return startPoint;
+  }, true);
+}
+
+function isEven(number){
+    if (number%2 === 0){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+// every([2,4,6],%2) = true
+// every([2,4,6,7],%2) = false
+
+var some = function(collection, iterator){
+  var answer = false;
+  reduce(collection, function(startPoint, value) {
+    startPoint = iterator(value) === true? true : false;
+    if (startPoint === true){
+        answer = startPoint;
+    }
+    return startPoint;
+  }, false);
+  return answer;
+};
+
+var some = function(collection, iterator){
+  return (!every(collection, function(value){
+    return !iterator(value);
+  }));
+}

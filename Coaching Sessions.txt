@@ -1,0 +1,156 @@
+var each = function(param, callback){
+  if(Array.isArray(param) || typeof param === "string"){
+    for(var i =0; i < param.length; i++){
+      callback(param[i], i);
+      }
+  } else {
+    for (var keys in param){
+    	callback(param[keys], keys);
+    }
+     
+  }
+};
+
+function doSomething (string)
+{
+console.log(string);
+}
+
+each(array, action)
+
+function firstLetter(array)
+{
+  console.log(array[0]);
+}
+
+writeObject(object,firstLetter);
+
+var me = ["kyle", "rinehart", "is"];
+
+function addExclimationPoint(string)
+{
+   return string + "!";
+}
+
+function any (array, modifyArray)
+{
+  var x = [];
+  each(array, funtion (element)
+    { x.push(modifyArray(element))} )
+  return x;
+} 
+
+var testArray = ["dog", "cat", "fish"];
+
+//Write a Function that takes an Array. For now, we’ll assume it’s an Array of Strings. I want the Function to iterate over each element in the Array, 
+and transform it to have an exclamation point at the end. This Function should return a new Array of transformed elements. It should not modify the original Array.
+
+function map (array, doSomething)
+{
+	var returnedArray = [];
+  each(array, function (element)
+    {  returnedArray.push(doSomething(element)) } )
+  return returnedArray;
+}
+
+function addExclamation(string)
+{
+  return string + "!";
+}
+
+function capitolize(string) 
+{
+  return string.toUpperCase();
+}
+
+map(testArray, capitolize);
+
+
+Write a Function that takes an Array. For now, we’ll assume it’s an Array of Strings. I want the Function to iterate over each element in the Array,
+and check if the String starts with the letter “f”. This Function should return a new Array of elements that pass our test. It should not modify the original Array.
+
+function letterFfinder (string)
+{
+  if (string[0] == "f")
+  {
+    return true;
+  } else { return false; }
+}
+
+
+function filter (array, doSomething)
+{
+  var returnedArray = [];
+  each(array, function (element) 
+    { if (doSomething(element) == true)
+      {
+        returnedArray.push(element);
+      }
+    } )
+  return returnedArray;
+}
+
+filter (testArray,letterFfinder);
+
+
+var toAdd = [1,2,3,4,5]
+
+function add(a, b) {
+	return a + b;
+}
+
+addTogether(toAdd, add); // 15
+
+
+//Write a function that takes an array of numbers. We want interate over these numbers and reduce the array down to one value of all
+the numbers added together and return that value;
+
+function reduce (array, doSomething, startValue)
+{
+	var addedTotal; 
+  if (startValue === true)
+  {
+  	addedTotal = startValue;
+  }
+  else 
+  {
+    addedTotal = array[0]; 
+  }
+  each(array, function (element) 
+  {
+    addedTotal = doSomething(addedTotal,element);
+  } );
+  return addedTotal;
+}
+car array = ["cat", "dog", "mouse"]
+var map = function(collection, callback) {
+	return reduce(collection, function(array, el) {
+  	array.push(callback(el));
+    return array;
+  }, []);
+}
+
+map(array, toUpper); ["CAT", "DOG", "MOUSE"]
+
+function map (array, doSomething) {
+	var returnedArray = [];
+  each(array, function (element)
+    {  returnedArray.push(doSomething(element)) } )
+  return returnedArray;
+}
+
+
+
+var obj1 = {abc: 123, def: 456};
+var obj2 = {ghi: 789, jkl: 247};
+var obj3 = {qas: 789, bvx: 247};
+var obj4 = {jyf: 789, xccg: 247};
+
+var extend = function(obj1) {
+
+	return obj1;
+}
+
+console.log(extend(obj1, obj2, obj3, obj4)) //{abc: 123, def: 456, ghi: 789: jkl: 247,qas: 789, bvx: 247, jyf: 789, xccg: 247}
+
+var reduce = function(collection, callback(){}, []0

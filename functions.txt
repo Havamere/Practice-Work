@@ -1,0 +1,27 @@
+function positiveSum (a,b) {
+  if ( (a + b) < 0 && a < 0 && b < 0) {
+    return positiveSum (-a,-b);
+  } else if (((a + b) > 0 && a > 0 && b < 0) || ((a + b) < 0 && a > 0 && b < 0)) {
+    return positiveSum (a,-b);
+  } else if (((a + b) > 0 && a < 0 && b > 0) || ((a + b) < 0 && a < 0 && b > 0)) {
+    return positiveSum (-a,b);
+  } else {
+    return a + b;
+  }
+}
+
+positiveSum(10,1);
+
+function noVowels(word){
+    var newWord = [];
+    var consonants = ['b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z'];
+    for (var i = 0; i < word.length; i ++){
+        for (var j = 0; j < consonants.length; j++){
+            if (word.charAt(i) === consonants[j]){
+                newWord.push(word.charAt(i));
+            } 
+        }
+    } return newWord.join("");
+}
+
+noVowels("towel");

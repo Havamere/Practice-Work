@@ -1,0 +1,152 @@
+// Goals:
+//	1. Computer picks randomly generated number between 1 and 1000
+//	2. User enters a number (checked between 1-1000)(checked if real/positive number)
+//	3. Computer relays back how close user imput is to generated number(cold, cool, warm, hot, BINGO!)
+//	4. Cold = >500; Cool = <500 and >100; Warm = <100 and >50; Hot = <50 and >1; BINGO! = correct number
+//	5. Log to user last 10 guesses with cold/cool/warm/hot rating.
+
+// Needed variables
+
+var greeting;
+var goal = Math.floor(Math.random()*1000);
+var guess;
+var guessLog = [];
+var howClose = [];
+var youWin = false;
+var numberOfGuesses = 0;
+var answered = false;
+
+// Polite intro to the game and way to exit if you don't want to play
+
+function greet()
+{
+  greeting = prompt("Welcome to my guessing game.  If you would like to try to guess my secret number please type \"YES\".  If not, please type \"NO\".").toUpperCase();
+}
+
+function gameMessage(greeting)
+{
+  switch (greeting)
+  {
+    case "YES":
+      alert("Excellent, I have picked a number between 1 and 1000, and your goal will be to guess it.");
+      alert("The rules are simple.  For each number that you guess, I will tell you how close you are by responding with Cold, Luke Warm, Warm, Warmer, Hot, Burning Hot, or On Fire!");
+      alert("However, I will only keep track of your last 10 guesses for you.");
+      alert("When you guess the number correctly, I will shout BINGO!!!");
+      answered = true;
+      break;
+    case "NO":
+      alert("I understand.  I hope you have a good day!");
+      youWin = true;
+      answered = true;
+      break;
+    default:
+      alert("Please answer \"YES\" or \"NO\".");
+      answered = false;
+      greet();
+  }
+}
+
+// Assist for making sure proper iputs are used
+
+function is_a_valid_number(guess)
+{
+  while (isNaN(guess) || guess < 1 || guess > 1000)
+  {
+    alert("You have not entered a number that is between 1 and 1000!");
+    guess = Number(prompt("Pick a number bewteen 1 and 1000.")); 
+  }
+  guessLog.push(guess);
+  return guess;
+}
+
+// Tells player how close to the goal number they are.
+
+function comparison (goal,guess)
+{
+  guess = Number(prompt("Pick a number bewteen 1 and 1000."));
+  guess = is_a_valid_number(guess); 
+  var difference = Math.abs(goal - guess);
+  if (goal == guess)
+  {
+    alert("BINGO!!!  You got the number right!");
+    howClose.push("BINGO!!!");
+    youWin = true;
+  }
+  else if (difference <5 && difference >= 1)
+  {
+    alert("You're on fire!!");
+    howClose.push("On Fire!");
+  }
+  else if (difference <10 && difference >= 5)
+  {
+    alert("You are burning up..");
+    howClose.push("Burning Hot.");
+  }
+  else if (difference <50 && difference >= 10)
+  {
+    alert("You are getting hot now...");
+    howClose.push("Hot.");
+  }
+  else if (difference < 100 && difference >= 50)
+  {
+    alert("You are very warm now...");
+    howClose.push("Warmer.");
+  }
+  else if (difference < 250 && difference >= 100) 
+  {
+    alert("You are getting warmer...");
+    howClose.push("Warm.");
+  }
+  else if (difference < 500 && difference >= 250)
+  {
+    alert("You are luke warm...");
+    howClose.push("Luke Warm.");
+  }
+  else
+  {
+    alert("You are so cold...");
+    howClose.push("Cold!");
+  }   
+}
+
+// Keeps track of only the last ten guesses for the player
+
+function last10(guessLog,howClose)
+{
+  var combinedArray = [];
+  var last10array = [];
+  guessLog.forEach(function (entry)
+  {
+    combinedArray.push("\n" + entry + " " + (howClose[i])); 
+    i++
+  });
+  if (combinedArray.length > 10)
+  {
+  last10array = combinedArray.slice(-10);
+  } 
+  else 
+  {
+    last10array = combinedArray;  
+  }
+  console.log(combinedArray);
+  alert("You're last 10 guesses were:" + last10array);
+}
+
+// Here is the game
+
+greet();
+
+while (answered === false)
+{
+  gameMessage(greeting);
+}
+while (youWin === false)
+{
+  comparison(goal,guess);
+  last10(guessLog,howClose);
+  numberOfGuesses++;
+  if (youWin === true)
+  {
+    alert("Congratulations, it only took you " + numberOfGuesses + " attempts to correctly guess my secret number!");
+  }
+}
